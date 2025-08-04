@@ -1,22 +1,368 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Cerámicas - Header</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        /* Banner giratorio superior */
+        .rotating-banner {
+            background-color: #ca1c81;
+            color: white;
+            padding: 8px 0;
+            overflow: hidden;
+            position: relative;
+            height: 30px;
+        }
+
+        .banner-content {
+            display: flex;
+            animation: scroll 30s linear infinite;
+            white-space: nowrap;
+        }
+
+        .banner-item {
+            display: flex;
+            align-items: center;
+            padding: 0 50px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .banner-item::before {
+            content: "•";
+            margin-right: 15px;
+            font-size: 16px;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(100%);
+            }
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        /* Header principal */
+        .main-header {
+            background-color: rgb(243, 151, 205);
+            padding: 15px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Logo */
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-icon {
+            width: 30px;
+            height: 30px;
+            background-color: rgb(243, 151, 205);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 24px;
+        }
+
+        /* Barra de búsqueda */
+        .search-container {
+            flex: 1;
+            max-width: 500px;
+            margin: 0 30px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 50px 12px 20px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            border-color: #070707;
+        }
+
+        .search-input::placeholder {
+            color: #a5a0a0;
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #a7a5a5;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        /* Acciones del header */
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .action-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #000000;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .action-item:hover {
+            color: #f038a9;
+        }
+
+        .action-icon {
+            width: 30px;
+            height: 30px;
+            background-color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        .action-text {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .cart-badge, .fav-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #D2B48C;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Navegación */
+        .navigation {
+            background-color: #f8f8f8;
+            padding: 15px 0;
+            border-top: 1px solid #eee;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 10px 0;
+            transition: color 0.3s;
+        }
+
+        .nav-item:hover {
+            color: #D2B48C;
+        }
+
+        .nav-item.productos {
+            color: #D2B48C;
+        }
+
+        .nav-item.productos::before {
+            content: "⚏";
+            margin-right: 8px;
+            font-size: 18px;
+        }
+
+        .dropdown-arrow {
+            margin-left: 8px;
+            font-size: 12px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .search-container {
+                order: 3;
+                margin: 0;
+                max-width: 100%;
+            }
+
+            .header-actions {
+                gap: 15px;
+            }
+
+            .nav-container {
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+
+            .banner-item {
+                padding: 0 30px;
+                font-size: 13px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1> La mejor torta</h1>
+    <!-- Banner giratorio superior -->
+    <div class="rotating-banner">
+        <div class="banner-content">
+            <div class="banner-item">Tazas bombe</div>
+            <div class="banner-item">Platos tostada</div>
+            <div class="banner-item">Taza cónica alta</div>
+            <div class="banner-item">Vasos con diseños</div>
+            <div class="banner-item">Teteras</div>
+            <div class="banner-item">Maté Ovo</div>
+            <div class="banner-item">Cerealeros</div>
+            <div class="banner-item">Tazones</div>
+            <div class="banner-item">Capu flor</div>
+            <div class="banner-item">Cucharas de porcelana</div>
+            <div class="banner-item">Botella de vidrio</div>
+            <div class="banner-item">Vaso pinta cerveza</div>
+        </div>
+    </div>
+
+    <!-- Header principal -->
+    <header class="main-header">
+        <div class="header-container">
+            <!-- Logo -->
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="logo.jpg" alt="logoo">
+                </div>
+            </div>
+
+            <!-- Barra de búsqueda -->
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Busca por Cerámicas">
+                <button class="search-btn">🔍</button>
+            </div>
+
+            <!-- Acciones del header -->
+            <div class="header-actions">
+                <a href="#" class="action-item">
+                    <div class="action-icon">👤</div>
+                    <span class="action-text">Ingresar</span>
+                </a>
+                <a href="#" class="action-item">
+                    <div class="action-icon">
+                        ♡
+                        <span class="fav-badge">0</span>
+                    </div>
+                    <span class="action-text">Favoritos</span>
+                </a>
+                <a href="#" class="action-item">
+                    <div class="action-icon">
+                        🛒
+                        <span class="cart-badge">0</span>
+                    </div>
+                    <span class="action-text">Carrito</span>
+                </a>
+            </div>
+        </div>
     </header>
 
-    <main>
-     
-       <img src="https://i.pinimg.com/1200x/33/c9/f7/33c9f7ecb35642043318a7c80c58c489.jpg" alt="red velvet" />
-    </main>
+    <!-- Navegación -->
+    <nav class="navigation">
+        <div class="nav-container">
+            <a href="#" class="nav-item productos">
+                Productos
+                <span class="dropdown-arrow">▼</span>
+            </a>
+            <a href="#" class="nav-item">Inicio</a>
+            <a href="#" class="nav-item">Tienda</a>
+            <a href="#" class="nav-item">Contacto</a>
+        </div>
+    </nav>
 
-     <footer>
-    <p>Nicole Roglich | Curso 5to 3ra | Año 2025</p>
-  </footer>
+    <script>
+        // Pausar animación al hacer hover
+        const banner = document.querySelector('.banner-content');
+        const rotatingBanner = document.querySelector('.rotating-banner');
+
+        rotatingBanner.addEventListener('mouseenter', () => {
+            banner.style.animationPlayState = 'paused';
+        });
+
+        rotatingBanner.addEventListener('mouseleave', () => {
+            banner.style.animationPlayState = 'running';
+        });
+
+        // Funcionalidad de búsqueda
+        const searchInput = document.querySelector('.search-input');
+        const searchBtn = document.querySelector('.search-btn');
+
+        searchBtn.addEventListener('click', () => {
+            const query = searchInput.value.trim();
+            if (query) {
+                console.log('Buscando:', query);
+                // Aquí puedes agregar la lógica de búsqueda
+            }
+        });
+
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                searchBtn.click();
+            }
+        });
+    </script>
 </body>
 </html>
