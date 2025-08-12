@@ -195,9 +195,11 @@
 
         /* Navegación */
         .navigation {
-            background-color: #f8f8f8;
+            background-color: #fffce0;
             padding: 15px 0;
             border-top: 1px solid #eee;
+            position: relative;
+            z-index: 100;
         }
 
         .nav-container {
@@ -210,6 +212,7 @@
         }
 
         .nav-item {
+            position: relative;
             display: flex;
             align-items: center;
             text-decoration: none;
@@ -220,11 +223,11 @@
         }
 
         .nav-item:hover {
-            color: #D2B48C;
+            color: #d28c8c;
         }
 
         .nav-item.productos {
-            color: #D2B48C;
+            color: #000000;
         }
 
         .nav-item.productos::before {
@@ -236,6 +239,79 @@
         .dropdown-arrow {
             margin-left: 8px;
             font-size: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-item:hover .dropdown-arrow {
+            /* Removido - se controla con JavaScript */
+        }
+
+        /* Solapa plegable */
+        .nav-item.productos {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .dropdown {
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 0;
+            transform: translateY(-10px);
+            background: #fffce0;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            border-radius: 8px;
+            min-width: 220px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            border: 1px solid rgba(210, 180, 140, 0.2);
+        }
+
+        .dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .nav-item.productos.active .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 20px;
+            color: #333;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 15px;
+        }
+
+        .dropdown-item:last-child {
+            border-bottom: none;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .dropdown-item:first-child {
+            border-radius: 8px 8px 0 0;
+        }
+
+        .dropdown-item:hover {
+            background: linear-gradient(135deg, #f397cd, #ca1c81);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .item-icon {
+            font-size: 18px;
+            transition: transform 0.3s ease;
+        }
+
+        .item-text {
+            font-weight: 500;
         }
 
         /* Responsive */
@@ -263,6 +339,25 @@
             .banner-item {
                 padding: 0 30px;
                 font-size: 13px;
+            }
+
+            .dropdown {
+                position: static;
+                box-shadow: none;
+                border-radius: 0;
+                background: #f0f0f0;
+                margin-left: 20px;
+                margin-top: 10px;
+                max-height: none;
+                overflow: visible;
+            }
+
+            .dropdown.active {
+                max-height: none;
+            }
+
+            .dropdown-item:hover {
+                transform: none;
             }
         }
     </style>
@@ -332,6 +427,16 @@
             <a href="#" class="nav-item productos">
                 Productos
                 <span class="dropdown-arrow">▼</span>
+                <div class="dropdown">
+                    <a href="#" class="dropdown-item">
+                        <span class="item-icon">🏢</span>
+                        <span class="item-text">Mayorista</span>
+                    </a>
+                    <a href="#" class="dropdown-item">
+                        <span class="item-icon">🛍️</span>
+                        <span class="item-text">Minorista</span>
+                    </a>
+                </div>
             </a>
             <a href="#" class="nav-item">Inicio</a>
             <a href="#" class="nav-item">Tienda</a>
@@ -340,6 +445,24 @@
     </nav>
 
     <script>
+        // Funcionalidad del menú desplegable
+        const productosNavItem = document.querySelector('.nav-item.productos');
+        const dropdown = document.querySelector('.dropdown');
+
+        productosNavItem.addEventListener('click', (e) => {
+            e.preventDefault();
+            productosNavItem.classList.toggle('active');
+            dropdown.classList.toggle('active');
+        });
+
+        // Cerrar el menú al hacer clic fuera
+        document.addEventListener('click', (e) => {
+            if (!productosNavItem.contains(e.target)) {
+                productosNavItem.classList.remove('active');
+                dropdown.classList.remove('active');
+            }
+        });
+
         // Pausar animación al hacer hover
         const banner = document.querySelector('.banner-content');
         const rotatingBanner = document.querySelector('.rotating-banner');
