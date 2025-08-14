@@ -14,6 +14,14 @@
 
         body {
             font-family: Arial, sans-serif;
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .main-content {
+            flex: 1;
         }
 
         /* Banner giratorio superior */
@@ -238,82 +246,118 @@
             font-size: 18px;
         }
 
-        .dropdown-arrow {
-            margin-left: 8px;
-            font-size: 12px;
-            transition: transform 0.3s ease;
-        }
-
-        .nav-item:hover .dropdown-arrow {
-            /* Removido - se controla con JavaScript */
-        }
-
-        /* Solapa plegable */
-        .nav-item.productos {
-            cursor: pointer;
-            position: relative;
-        }
-
-        .dropdown {
-            position: absolute;
-            top: calc(100% + 10px);
-            left: 0;
-            transform: translateY(-10px);
-            background: #fffce0;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-            border-radius: 8px;
-            min-width: 220px;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
+        /* Sidebar lateral */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100vh;
+            background: linear-gradient(135deg, #fffce0, #f5f3d0);
+            box-shadow: 4px 0 15px rgba(0, 0, 0, 0.15);
+            transition: left 0.4s ease;
             z-index: 1000;
-            border: 1px solid rgba(210, 180, 140, 0.2);
+            border-right: 3px solid #D2B48C;
         }
 
-        .dropdown.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
+        .sidebar.active {
+            left: 0;
         }
 
-        .nav-item.productos.active .dropdown-arrow {
-            transform: rotate(180deg);
-        }
-
-        .dropdown-item {
+        .sidebar-header {
+            background: linear-gradient(135deg, #f397cd, #ca1c81);
+            color: white;
+            padding: 20px;
+            font-size: 18px;
+            font-weight: bold;
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 15px 20px;
+            justify-content: space-between;
+        }
+
+        .close-sidebar {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+
+        .close-sidebar:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .sidebar-content {
+            padding: 20px 0;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 25px;
             color: #333;
             text-decoration: none;
             transition: all 0.3s ease;
-            border-bottom: 1px solid #f0f0f0;
-            font-size: 15px;
+            border-bottom: 1px solid rgba(210, 180, 140, 0.3);
+            font-size: 16px;
+            font-weight: 500;
         }
 
-        .dropdown-item:last-child {
-            border-bottom: none;
-            border-radius: 0 0 8px 8px;
-        }
-
-        .dropdown-item:first-child {
-            border-radius: 8px 8px 0 0;
-        }
-
-        .dropdown-item:hover {
+        .sidebar-item:hover {
             background: linear-gradient(135deg, #f397cd, #ca1c81);
             color: white;
-            transform: translateX(5px);
+            transform: translateX(10px);
+            padding-left: 35px;
         }
 
-        .item-icon {
-            font-size: 18px;
-            transition: transform 0.3s ease;
+        .sidebar-icon {
+            font-size: 20px;
+            min-width: 25px;
+            text-align: center;
         }
 
-        .item-text {
-            font-weight: 500;
+        /* Overlay para cerrar sidebar */
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .sidebar-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Botón de menú */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #333;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .menu-toggle:hover {
+            background-color: rgba(0, 0, 0, 0.1);
         }
 
         /* Sección de imagen */
@@ -330,7 +374,6 @@
             width: calc(100% - 40px);
             margin: 0 auto;
         }
-
 
         .main-image {
             width: 100%;
@@ -439,6 +482,78 @@
             transform: scale(1.05);
         }
 
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #f397cd, #ca1c81);
+            color: white;
+            padding: 20px 0;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .footer-contact {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+        }
+
+        .contact-icon {
+            font-size: 16px;
+        }
+
+        .footer-center {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .footer-right {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .header-container {
@@ -466,27 +581,17 @@
                 font-size: 13px;
             }
 
-            .dropdown {
-                position: static;
-                box-shadow: none;
-                border-radius: 0;
-                background: #f0f0f0;
-                margin-left: 20px;
-                margin-top: 10px;
-                max-height: none;
-                overflow: visible;
+            .menu-toggle {
+                display: block;
+                order: -1;
             }
 
-            .dropdown.active {
-                max-height: none;
-            }
-
-            .dropdown-item:hover {
-                transform: none;
+            .nav-item.productos {
+                display: none;
             }
 
             .main-image {
-                height: 100px;
+                height: 300px;
             }
 
             .categories-container {
@@ -505,12 +610,59 @@
             .category-description {
                 font-size: 0.85rem;
             }
+
+            .sidebar {
+                width: 280px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .footer-left,
+            .footer-contact {
+                justify-content: center;
+            }
+
+            .footer-right {
+                justify-content: center;
+                gap: 15px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Banner giratorio superior -->
-    <div class="rotating-banner">
+    <!-- Overlay del sidebar -->
+    <div class="sidebar-overlay"></div>
+
+    <!-- Sidebar lateral -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <span>Productos</span>
+            <button class="close-sidebar">✕</button>
+        </div>
+        <div class="sidebar-content">
+            <a href="#" class="sidebar-item">
+                <span class="sidebar-icon">☕</span>
+                <span>Cerámicas</span>
+            </a>
+            <a href="#" class="sidebar-item">
+                <span class="sidebar-icon">🥂</span>
+                <span>Vidrios</span>
+            </a>
+            <a href="#" class="sidebar-item">
+                <span class="sidebar-icon">🥄</span>
+                <span>Accesorios</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+        <!-- Banner giratorio superior -->
+        <div class="rotating-banner">
         <div class="banner-content">
             <div class="banner-item">Tazas bombe</div>
             <div class="banner-item">Platos tostada</div>
@@ -570,19 +722,9 @@
     <!-- Navegación -->
     <nav class="navigation">
         <div class="nav-container">
+            <button class="menu-toggle">☰</button>
             <a href="#" class="nav-item productos">
                 Productos
-                <span class="dropdown-arrow">▼</span>
-                <div class="dropdown">
-                    <a href="#" class="dropdown-item">
-                        <span class="item-icon">🏢</span>
-                        <span class="item-text">Mayorista</span>
-                    </a>
-                    <a href="#" class="dropdown-item">
-                        <span class="item-icon">🛍️</span>
-                        <span class="item-text">Minorista</span>
-                    </a>
-                </div>
             </a>
             <a href="#" class="nav-item">Inicio</a>
             <a href="#" class="nav-item">Tienda</a>
@@ -595,7 +737,7 @@
         <div class="image-container">
             <img src="imagen de pagina principal.jpg" alt="Cerámicas" class="main-image">
         </div>
-    </section>
+    </div>
 
     <!-- Sección de categorías -->
     <section class="categories-section">
@@ -623,23 +765,70 @@
             </div>
         </div>
     </section>
-
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-content">
+            <div class="footer-left">
+                <div class="footer-contact">
+                    <div class="contact-item">
+                        <span class="contact-icon">📞</span>
+                        <span>+54 11 6422-4459</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">✉️</span>
+                        <span>monicaposadas69@gmail.com</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-center">
+                <p>&copy; 2024 Cerámicas Artesanales. Todos los derechos reservados.</p>
+            </div>
+            
+            <div class="footer-right">
+                <a href="#" class="footer-link">Política de Privacidad</a>
+                <a href="#" class="footer-link">Términos y Condiciones</a>
+                <a href="#" class="footer-link">Preguntas Frecuentes</a>
+            </div>
+        </div>
+    </div>
+</footer>
     <script>
-        // Funcionalidad del menú desplegable
+        // Elementos del sidebar
+        const menuToggle = document.querySelector('.menu-toggle');
         const productosNavItem = document.querySelector('.nav-item.productos');
-        const dropdown = document.querySelector('.dropdown');
+        const sidebar = document.querySelector('.sidebar');
+        const sidebarOverlay = document.querySelector('.sidebar-overlay');
+        const closeSidebar = document.querySelector('.close-sidebar');
 
-        productosNavItem.addEventListener('click', (e) => {
+        // Función para abrir el sidebar
+        function openSidebar() {
+            sidebar.classList.add('active');
+            sidebarOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Función para cerrar el sidebar
+        function closeSidebarFunc() {
+            sidebar.classList.remove('active');
+            sidebarOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Event listeners
+        menuToggle?.addEventListener('click', openSidebar);
+        productosNavItem?.addEventListener('click', (e) => {
             e.preventDefault();
-            productosNavItem.classList.toggle('active');
-            dropdown.classList.toggle('active');
+            openSidebar();
         });
 
-        // Cerrar el menú al hacer clic fuera
-        document.addEventListener('click', (e) => {
-            if (!productosNavItem.contains(e.target)) {
-                productosNavItem.classList.remove('active');
-                dropdown.classList.remove('active');
+        closeSidebar.addEventListener('click', closeSidebarFunc);
+        sidebarOverlay.addEventListener('click', closeSidebarFunc);
+
+        // Cerrar con tecla Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeSidebarFunc();
             }
         });
 
